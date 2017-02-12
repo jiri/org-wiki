@@ -15,19 +15,19 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 
 ;; file-relative-name filename &optional directory
 
-(defvar my-org-dir "~/Org/wiki")
-(defvar extra-export-options '((org-html-doctype "html5")
-			       (org-html-head-include-default-style nil)))
+(defvar wiki-directory "~/Org/wiki")
+(defvar wiki-extra-export-options '((org-html-doctype "html5")
+				    (org-html-head-include-default-style nil)))
 
 (defun render-org-file (path)
   (with-current-buffer (find-file-noselect path)
     (progv
-	(mapcar 'first extra-export-options)
-	(mapcar 'second extra-export-options)
+	(mapcar 'first wiki-extra-export-options)
+	(mapcar 'second wiki-extra-export-options)
       (org-export-as 'html))))
 
 (defun my-elnode-org-handler (httpcon)
-  (elnode-docroot-for my-org-dir
+  (elnode-docroot-for wiki-directory
     with path
     on httpcon
     do (cond ((file-directory-p path)
@@ -43,7 +43,7 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 
   (with-selected-frame (make-frame '((window-system . ns)
 				     (client . nowait)))
-    (let ((path (elnode-get-targetfile httpcon my-org-dir)))
+    (let ((path (elnode-get-targetfile httpcon wiki-directory)))
       (if (file-directory-p path)
 	  (find-file (concat (file-name-as-directory path) "index.org"))
 	(find-file path)))
