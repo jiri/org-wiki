@@ -1,0 +1,42 @@
+body {
+    font-family: "Helvetica Neue";
+    font-size: 12pt;
+    width: 50%;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+/* #table-of-contents { */
+/*     position: fixed; */
+/*     right: 32px; */
+/* } */
+
+.title {
+    text-align: left;
+}
+
+p {
+    margin-left: 1em;
+}
+
+pre.src::before {
+    display: none !important;
+}
+
+.src {
+    font-family: "Input";
+    font-size: 11pt;
+    border: 0;
+    border-radius: 2px;
+    background-color: #333;
+    color: white;
+    padding: 12px !important;
+}
+
+li {
+    list-style-type: none;
+}
+
+li:before {
+    content: "- ";
+}
