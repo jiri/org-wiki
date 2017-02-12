@@ -15,9 +15,6 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 
 ;; file-relative-name filename &optional directory
 
-(setq org-html-head-include-default-style nil)
-(setq org-html-doctype "html5")
-
 (defvar my-org-dir "~/Org/wiki")
 (defvar extra-export-options '((org-html-doctype "html5")
 			       (org-html-head-include-default-style nil)))
