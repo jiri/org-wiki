@@ -15,6 +15,7 @@ are rendered just the way you configured them to.
 
 ** What to do
 
+- [X] Edit using `/path?edit` instead of `/edit/path`
 - [ ] Let users supply their own CSS files
 - [ ] Let users configure keyboard shortcuts
 - [ ] Render a directory tree for navigation

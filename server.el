@@ -7,14 +7,12 @@
 <script type=\"text/javascript\">
 Mousetrap.bind('ctrl+x ctrl+f', function() {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open(\"GET\", window.location.protocol + \"//\" + window.location.host + \"/edit\" + window.location.pathname + \"?edit\", true);
+    xmlHttp.open(\"GET\", window.location.href + \"?edit\", true);
     xmlHttp.send(null);
 });
 </script>
 <link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />
 ")
-
-;; file-relative-name filename &optional directory
 
 (defvar wiki-directory "~/Org/wiki")
 (defvar wiki-extra-export-options '((org-html-doctype "html5")
@@ -34,18 +32,19 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
       (concat (file-name-as-directory path) "index.org")
     path))
 
+(defun my-elnode-dispatch (httpcon)
+  (if (equal (elnode-http-params httpcon) '(("edit")))
+      (my-elnode-edit-handler httpcon)
+    (my-elnode-org-handler httpcon)))
+
 (defun my-elnode-org-handler (httpcon)
   (elnode-docroot-for wiki-directory
     with path
     on httpcon
-    ;; TODO: Extract path procesing
     do (let ((html (render-org-file (process-path path))))
     	 (elnode-send-html httpcon html))))
 
-;; TODO: /edit/page.org -> page.org?edit
 (defun my-elnode-edit-handler (httpcon)
-  ;; (message "%s" (elnode-http-params httpcon))
-
   (with-selected-frame (make-frame '((window-system . ns)
 				     (client . nowait)))
     (let ((path (elnode-get-targetfile httpcon wiki-directory)))
@@ -70,8 +69,7 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 
 (defvar my-app-routes `(("^.*//style.css" . style)
 			("^.*//mousetrap.min.js" . mousetrap)
-			("^.*//edit/\\(.*\\)" . my-elnode-edit-handler)
-			("^.*//\\(.*\\)" . my-elnode-org-handler)))
+			("^.*//\\(.*\\)" . my-elnode-dispatch)))
 
 ;; TODO: Export this
 (defun root-handler (httpcon)
