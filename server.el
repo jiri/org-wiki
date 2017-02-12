@@ -1,6 +1,7 @@
 ;; This buffer is for text that is not saved, and for Lisp evaluation.
 ;; To create a file, visit it with C-x C-f and enter text in its buffer.
 
+;; TODO: Make this better
 (setq org-html-head-extra "
 <script type=\"text/javascript\" src=\"/mousetrap.min.js\"></script>
 <script type=\"text/javascript\">
@@ -30,6 +31,7 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
   (elnode-docroot-for wiki-directory
     with path
     on httpcon
+    ;; TODO: Extract path procesing
     do (cond ((file-directory-p path)
 	      (let* ((path (concat (file-name-as-directory path) "index.org"))
 		    (html (render-org-file path)))
@@ -38,6 +40,7 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 	      (let ((html (render-org-file path)))
 		(elnode-send-html httpcon html))))))
 
+;; TODO: /edit/page.org -> page.org?edit
 (defun my-elnode-edit-handler (httpcon)
   ;; (message "%s" (elnode-http-params httpcon))
 
@@ -52,6 +55,7 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon " "))
 
+;; TODO: Automate this
 (defun style (httpcon)
   (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
   (elnode-send-file httpcon "~/style.css"))
@@ -65,6 +69,7 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 			("^.*//edit/\\(.*\\)" . my-elnode-edit-handler)
 			("^.*//\\(.*\\)" . my-elnode-org-handler)))
 
+;; TODO: Export this
 (defun root-handler (httpcon)
   (elnode-hostpath-dispatcher httpcon my-app-routes))
 
