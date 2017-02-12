@@ -29,18 +29,18 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 	(mapcar 'second wiki-extra-export-options)
       (org-export-as 'html))))
 
+(defun process-path (path)
+  (if (file-directory-p path)
+      (concat (file-name-as-directory path) "index.org")
+    path))
+
 (defun my-elnode-org-handler (httpcon)
   (elnode-docroot-for wiki-directory
     with path
     on httpcon
     ;; TODO: Extract path procesing
-    do (cond ((file-directory-p path)
-	      (let* ((path (concat (file-name-as-directory path) "index.org"))
-		    (html (render-org-file path)))
-		(elnode-send-html httpcon html)))
-	     ((file-regular-p path)
-	      (let ((html (render-org-file path)))
-		(elnode-send-html httpcon html))))))
+    do (let ((html (render-org-file (process-path path))))
+    	 (elnode-send-html httpcon html))))
 
 ;; TODO: /edit/page.org -> page.org?edit
 (defun my-elnode-edit-handler (httpcon)
