@@ -1,0 +1,21 @@
+* Org wiki
+
+This is a simple project to host an org-powered wiki locally. Just
+point the package to the root of your directory and it will take care
+of the rest. It uses emacs as the rendering backend so the HTML files
+are rendered just the way you configured them to.
+
+** Features
+
+- Orgmode files are automatically rendered to html *using Emacs*
+- URLs ending in a folder name are automatically routed to display
+  ~index.org~
+- You can open the currently viewed file in emacs using ~C-x C-f~ in
+  the browser
+
+** What to do
+
+- [ ] Let users supply their own CSS files
+- [ ] Let users configure keyboard shortcuts
+- [ ] Render a directory tree for navigation
+- [ ] Easy creation of new pages in-browser
