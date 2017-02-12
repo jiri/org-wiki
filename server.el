@@ -19,6 +19,8 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 (defvar wiki-directory "~/Org/wiki")
 (defvar wiki-extra-export-options '((org-html-doctype "html5")
 				    (org-html-head-include-default-style nil)))
+(defvar wiki-installation-directory (file-name-directory
+				     (or load-file-name buffer-file-name)))
 
 (defun render-org-file (path)
   (with-current-buffer (find-file-noselect path)
@@ -57,12 +59,14 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
 
 ;; TODO: Automate this
 (defun style (httpcon)
-  (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
-  (elnode-send-file httpcon "~/style.css"))
+  (let* ((file (concat wiki-installation-directory "style.css")))
+    (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
+    (elnode-send-file httpcon file)))
 
 (defun mousetrap (httpcon)
-  (elnode-http-start httpcon 200 '("Content-type" . "text/javascript"))
-  (elnode-send-file httpcon "~/Downloads/mousetrap.min.js"))
+  (let* ((file (concat wiki-installation-directory "mousetrap.min.js")))
+    (elnode-http-start httpcon 200 '("Content-type" . "text/javascript"))
+    (elnode-send-file httpcon file)))
 
 (defvar my-app-routes `(("^.*//style.css" . style)
 			("^.*//mousetrap.min.js" . mousetrap)
