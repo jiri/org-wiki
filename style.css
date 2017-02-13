@@ -1,6 +1,6 @@
 body {
     font-family: "Helvetica Neue";
-    font-size: 14pt;
+    font-size: 12pt;
     width: 50%;
     margin: 0 auto;
     line-height: 1.4;
@@ -24,8 +24,8 @@ pre.src::before {
 }
 
 .src {
-    font-family: "Input";
-    font-size: 11pt;
+    font-family: "Input", "Menlo", monospace;
+    font-size: 10pt;
     border: 0;
     border-radius: 2px;
     background-color: #333;
