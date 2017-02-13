@@ -16,6 +16,8 @@
 
 (defvar wiki-directory "~/Org/wiki")
 (defvar wiki-extra-export-options '((org-html-doctype "html5")
+				    (org-html-head-include-default-style nil)
+				    (org-export-with-section-numbers nil)
 				    (org-html-htmlize-output-type css)))
 (defvar wiki-installation-directory (file-name-directory
 				     (or load-file-name buffer-file-name)))
