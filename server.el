@@ -2,21 +2,21 @@
 ;; To create a file, visit it with C-x C-f and enter text in its buffer.
 
 ;; TODO: Make this better
-(setq org-html-head-extra "
-<script type=\"text/javascript\" src=\"/mousetrap.min.js\"></script>
-<script type=\"text/javascript\">
-Mousetrap.bind('ctrl+x ctrl+f', function() {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open(\"GET\", window.location.href + \"?edit\", true);
-    xmlHttp.send(null);
-});
-</script>
-<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />
-")
+(setq org-html-head-extra
+      (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />"
+	      "<script type=\"text/javascript\" src=\"/mousetrap.min.js\"></script>"
+	      "<script type=\"text/javascript\">
+                 Mousetrap.bind('ctrl+x ctrl+f', function() {
+                   var xmlHttp = new XMLHttpRequest();
+                   xmlHttp.open(\"GET\", window.location.href + \"?edit\", true);
+                   xmlHttp.send(null);
+                 });
+               </script>"
+	      "<link rel=\"stylesheet\" type=\"text/css\" href=\"/theme.css\" />"))
 
 (defvar wiki-directory "~/Org/wiki")
 (defvar wiki-extra-export-options '((org-html-doctype "html5")
-				    (org-html-head-include-default-style nil)))
+				    (org-html-htmlize-output-type css)))
 (defvar wiki-installation-directory (file-name-directory
 				     (or load-file-name buffer-file-name)))
 
@@ -62,12 +62,18 @@ Mousetrap.bind('ctrl+x ctrl+f', function() {
     (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
     (elnode-send-file httpcon file)))
 
+(defun theme (httpcon)
+  (let* ((file (concat wiki-installation-directory "theme.css")))
+    (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
+    (elnode-send-file httpcon file)))
+
 (defun mousetrap (httpcon)
   (let* ((file (concat wiki-installation-directory "mousetrap.min.js")))
     (elnode-http-start httpcon 200 '("Content-type" . "text/javascript"))
     (elnode-send-file httpcon file)))
 
 (defvar my-app-routes `(("^.*//style.css" . style)
+			("^.*//theme.css" . theme)
 			("^.*//mousetrap.min.js" . mousetrap)
 			("^.*//\\(.*\\)" . my-elnode-dispatch)))
 
