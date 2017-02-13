@@ -15,8 +15,10 @@ body {
     text-align: left;
 }
 
-p {
+p, pre {
     margin-left: 1em;
+    margin-right: 1em;
+    /* text-align: justify; */
 }
 
 pre.src::before {
