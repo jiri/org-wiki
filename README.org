@@ -16,6 +16,7 @@ are rendered just the way you configured them to.
 ** What to do
 
 - [X] Edit using `/path?edit` instead of `/edit/path`
+- [ ] Generate highlighting CSS dynamically
 - [ ] Make relative links in Org files work
 - [ ] Improve routing
 - [ ] Let users supply their own CSS files
