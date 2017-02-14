@@ -23,3 +23,4 @@ are rendered just the way you configured them to.
 - [ ] Let users configure keyboard shortcuts
 - [ ] Render a directory tree for navigation
 - [ ] Easy creation of new pages in-browser
+- [ ] Complete CSS styles for Org HTML exports
