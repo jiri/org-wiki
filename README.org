@@ -25,6 +25,7 @@ are rendered just the way you configured them to.
 - [ ] Easy creation of new pages in-browser
 - [ ] Complete CSS styles for Org HTML exports
 - [ ] Package Org-wiki and distribute it through MELPA
+- [ ] Add a license file
 
 ** TODO Make a the setup reusable for multiple directories
 
