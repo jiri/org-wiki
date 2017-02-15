@@ -1,18 +1,30 @@
 ;; This buffer is for text that is not saved, and for Lisp evaluation.
 ;; To create a file, visit it with C-x C-f and enter text in its buffer.
 
+(defconst org-wiki-base
+  (file-name-directory (or load-file-name buffer-file-name)))
+
+(defconst default-mousetrap-file
+  (expand-file-name "mousetrap.min.js" org-wiki-base))
+
+(defconst default-style-file
+  (expand-file-name "style.css" org-wiki-base))
+
+(defconst default-theme-file
+  (expand-file-name "theme.css" org-wiki-base))
+
 ;; TODO: Make this better
-(setq org-html-head-extra
-      (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />"
-	      "<script type=\"text/javascript\" src=\"/mousetrap.min.js\"></script>"
-	      "<script type=\"text/javascript\">
+(defconst head-extra
+  (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />"
+	  "<script type=\"text/javascript\" src=\"/mousetrap.min.js\"></script>"
+	  "<script type=\"text/javascript\">
                  Mousetrap.bind('ctrl+x ctrl+f', function() {
                    var xmlHttp = new XMLHttpRequest();
                    xmlHttp.open(\"GET\", window.location.href + \"?edit\", true);
                    xmlHttp.send(null);
                  });
                </script>"
-	      "<link rel=\"stylesheet\" type=\"text/css\" href=\"/theme.css\" />"))
+	  "<link rel=\"stylesheet\" type=\"text/css\" href=\"/theme.css\" />"))
 
 (defvar wiki-directory "~/Org/wiki")
 (defvar wiki-extra-export-options '((org-html-doctype "html5")
@@ -23,34 +35,51 @@
 (defvar wiki-installation-directory (file-name-directory
 				     (or load-file-name buffer-file-name)))
 
+(defvar org-wiki/instances nil)
+
+;; Convenience function
+;; TODO: Hide this
 (defun render-org-file (path)
-  (with-current-buffer (find-file-noselect path)
-    (progv
-	(mapcar 'first wiki-extra-export-options)
-	(mapcar 'second wiki-extra-export-options)
-      (org-export-as 'html))))
+  (let ((org-html-head-extra head-extra))
+    (with-current-buffer (find-file-noselect path)
+      (progv
+	  (mapcar 'first wiki-extra-export-options)
+	  (mapcar 'second wiki-extra-export-options)
+	(org-export-as 'html)))))
 
 (defun process-path (path)
   (if (file-directory-p path)
       (concat (file-name-as-directory path) "index.org")
     path))
 
-(defun my-elnode-dispatch (httpcon)
+(defun org-wiki/connection-port (httpcon)
+  (let ((host (elnode-server-info httpcon)))
+    (string-match "\\([^:]+\\)\\(:\\([0-9]+\\)\\)*" host)
+    (match-string-no-properties 3 host)))
+
+(defun org-wiki/root-for (httpcon)
+  (let ((port (org-wiki/connection-port httpcon)))
+    (cdr (assoc (string-to-number port) org-wiki/instances))))
+
+;; Handlers
+(defun org-wiki/dispatch (httpcon)
   (if (equal (elnode-http-params httpcon) '(("edit")))
-      (my-elnode-edit-handler httpcon)
-    (my-elnode-org-handler httpcon)))
+      (org-wiki/edit httpcon)
+    (org-wiki/render httpcon)))
 
-(defun my-elnode-org-handler (httpcon)
-  (elnode-docroot-for wiki-directory
-    with path
-    on httpcon
-    do (let ((html (render-org-file (process-path path))))
-    	 (elnode-send-html httpcon html))))
+;; TODO: Implement this manually
+(defun org-wiki/render (httpcon)
+  (let ((root (org-wiki/root-for httpcon)))
+    (elnode-docroot-for root
+      with path
+      on httpcon
+      do (let ((html (render-org-file (process-path path))))
+	   (elnode-send-html httpcon html)))))
 
-(defun my-elnode-edit-handler (httpcon)
+(defun org-wiki/edit (httpcon)
   (with-selected-frame (make-frame '((window-system . ns)
 				     (client . nowait)))
-    (let ((path (elnode-get-targetfile httpcon wiki-directory)))
+    (let ((path (elnode-get-targetfile httpcon (org-wiki/root-for httpcon))))
       (if (file-directory-p path)
 	  (find-file (concat (file-name-as-directory path) "index.org"))
 	(find-file path)))
@@ -59,33 +88,39 @@
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon " "))
 
+;; Static file handlers
 ;; TODO: Automate this
-(defun style (httpcon)
+(defun org-wiki/style (httpcon)
   (let* ((file (concat wiki-installation-directory "style.css")))
     (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
     (elnode-send-file httpcon file)))
 
-(defun theme (httpcon)
-  (let* ((file (concat wiki-installation-directory "theme.css")))
-    (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
-    (elnode-send-file httpcon file)))
-
-(defun mousetrap (httpcon)
+(defun org-wiki/mousetrap (httpcon)
   (let* ((file (concat wiki-installation-directory "mousetrap.min.js")))
     (elnode-http-start httpcon 200 '("Content-type" . "text/javascript"))
     (elnode-send-file httpcon file)))
 
-(defvar my-app-routes `(("^.*//style.css" . style)
-			("^.*//theme.css" . theme)
-			("^.*//mousetrap.min.js" . mousetrap)
-			("^.*//\\(.*\\)" . my-elnode-dispatch)))
+;; TODO: Generate this on the fly
+(defun org-wiki/theme (httpcon)
+  (let* ((file (concat wiki-installation-directory "theme.css")))
+    (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
+    (elnode-send-file httpcon file)))
 
-;; TODO: Export this
-(defun root-handler (httpcon)
-  (elnode-hostpath-dispatcher httpcon my-app-routes))
+;; Root handler
+(defconst org-wiki/routes `(("^.*//style.css" . org-wiki/style)
+			    ("^.*//theme.css" . org-wiki/theme)
+			    ("^.*//mousetrap.min.js" . org-wiki/mousetrap)
+			    ("^.*//\\(.*\\)" . org-wiki/dispatch)))
 
-(elnode-start 'root-handler :port 8009)
-;; (elnode-stop 8009)
+(defun org-wiki/root (httpcon)
+  (elnode-hostpath-dispatcher httpcon org-wiki/routes))
 
-;; (elnode-start 'my-elnode-org-handler :port 8002 :host "0.0.0.0")
-;; (elnode-stop 8002)
+;; API functions
+;; TODO: Autoload this
+(defun org-wiki/start (root &optional port)
+  (let ((p (or port 8000)))
+    (push `(,p . ,root) org-wiki/instances)
+    (elnode-start 'org-wiki/root :port p)))
+
+(org-wiki/start "~/Org/wiki")
+;; (elnode-stop 8000)
