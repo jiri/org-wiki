@@ -13,7 +13,7 @@ are rendered just the way you configured them to.
 - You can open the currently viewed file in emacs using ~C-x C-f~ in
   the browser
 
-** What to do
+** TODO Features to implement before v1.0
 
 - [X] Edit using `/path?edit` instead of `/edit/path`
 - [ ] Generate highlighting CSS dynamically
@@ -24,3 +24,15 @@ are rendered just the way you configured them to.
 - [ ] Render a directory tree for navigation
 - [ ] Easy creation of new pages in-browser
 - [ ] Complete CSS styles for Org HTML exports
+- [ ] Package Org-wiki and distribute it through MELPA
+
+** TODO Make a the setup reusable for multiple directories
+
+Right now, the setup is not reusable at all. Ideally, all you'd need
+to do to is use a macro / alist to define a wiki setup and run it with
+an independent handler.
+
+#+BEGIN_SRC emacs-lisp
+(make-wiki :root "~/Org/wiki"
+           :custom-css "~/Org/wiki/style.css")
+#+END_SRC
