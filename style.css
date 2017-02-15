@@ -1,9 +1,11 @@
 body {
     font-family: "Helvetica Neue";
-    font-size: 14pt;
+    font-size: 12pt;
     width: 50%;
     margin: 0 auto;
     line-height: 1.4;
+    color: #333333;
+    background-color: #fefdfd;
 }
 
 /* #table-of-contents { */
@@ -16,8 +18,8 @@ body {
 }
 
 p, pre {
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: 16px;
+    margin-right: 16px;
     /* text-align: justify; */
 }
 
