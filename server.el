@@ -39,7 +39,7 @@
 
 ;; Convenience function
 ;; TODO: Hide this
-(defun render-org-file (path)
+(defun org-wiki/render-file (path)
   (let ((org-html-head-extra head-extra))
     (with-current-buffer (find-file-noselect path)
       (progv
@@ -47,7 +47,7 @@
 	  (mapcar 'second wiki-extra-export-options)
 	(org-export-as 'html)))))
 
-(defun process-path (path)
+(defun org-wiki/process-path (path)
   (if (file-directory-p path)
       (concat (file-name-as-directory path) "index.org")
     path))
