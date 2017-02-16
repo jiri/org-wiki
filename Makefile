@@ -1,4 +1,4 @@
-FILES = ./server.el        \
+FILES = ./org-wiki.el        \
 	./mousetrap.min.js \
 	./style.css        \
 	./theme.css        \
