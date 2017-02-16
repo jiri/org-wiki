@@ -67,6 +67,7 @@ the root directory or the port the wiki is running on.
 - [ ] Package Org-wiki
 - [ ] Distribute Org-wiki through MELPA / Marmalade
 - [ ] Add a license file
+- [ ] Make ~start-wiki~ / ~stop-wiki~ interactive
 
 ** TODO Improve the API
 
