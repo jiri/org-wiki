@@ -12,6 +12,44 @@ are rendered just the way you configured them to.
   ~index.org~
 - You can open the currently viewed file in emacs using ~C-x C-f~ in
   the browser
+- Source code snippets are rendered using Emacs and as such are
+  colored exactly as they would be in your editor.
+
+** Installation
+
+Right now, Org wiki isn't yet available through a package archive, so
+you'll have to install it manually. A ~Makefile~ is provided to make
+this as easy as possible. First, you have to ~make~ the package:
+
+#+BEGIN_SRC shell
+git clone https://github.com/jiri/org-wiki
+cd org-wiki
+make package
+#+END_SRC
+
+This will create a file called ~org-wiki-0.2.tar~ in the source
+directory. Now you just need to install it through ~package.el~ using
+~M-x package-install-file RET~ and providing path to the tar file.
+
+** Usage
+
+I'm aiming to make the package as simple as possible. All you have to
+do to get a wiki up and running is starting it. Unless you provide a
+port as a second argument, port 8000 will be used. Note that any one
+root directory can only be served on one port.
+
+#+BEGIN_SRC emacs-lisp
+(org-wiki/start "~/org/wiki")
+(org-wiki/start "~/org/wiki2" 8080)
+#+END_SRC
+
+You can stop an already running wiki by providing either the path to
+the root directory or the port the wiki is running on.
+
+#+BEGIN_SRC emacs-lisp
+(org-wiki/stop "~/org/wiki")
+(org-wiki/stop 8080)
+#+END_SRC
 
 ** TODO Features to implement before v1.0
 
