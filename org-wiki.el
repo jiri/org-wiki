@@ -128,6 +128,5 @@
 	       (delq (rassoc ref org-wiki/instances)
 		     org-wiki/instances)))))
 
-;; (org-wiki/start "~/Org/wiki")
-;; (org-wiki/stop  "~/Org/wiki")
-;; org-wiki/instances
+;; Module provisions
+(provide 'org-wiki)
