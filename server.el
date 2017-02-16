@@ -122,5 +122,20 @@
     (push `(,p . ,root) org-wiki/instances)
     (elnode-start 'org-wiki/root :port p)))
 
+(defun org-wiki/stop (ref)
+  (cond ((numberp ref)
+	 (elnode-stop ref)
+	 (setq org-wiki/instances
+	       (delq (assoc ref org-wiki/instances)
+		     org-wiki/instances)))
+	((stringp ref)
+	 (elnode-stop (car (rassoc ref org-wiki/instances)))
+	 (setq org-wiki/instances
+	       (delq (rassoc ref org-wiki/instances)
+		     org-wiki/instances)))))
+
 (org-wiki/start "~/Org/wiki")
+;; (org-wiki/stop  "~/Org/wiki")
+;; (org-wiki/stop  8000)
+
 ;; (elnode-stop 8000)
