@@ -26,15 +26,11 @@
                </script>"
 	  "<link rel=\"stylesheet\" type=\"text/css\" href=\"/theme.css\" />"))
 
-(defvar wiki-directory "~/Org/wiki")
 (defvar wiki-extra-export-options '((org-html-doctype "html5")
 				    (org-html-head-include-default-style nil)
 				    (org-export-with-section-numbers nil)
 				    (org-html-htmlize-output-type css)
 				    (org-html-scripts nil)))
-(defvar wiki-installation-directory (file-name-directory
-				     (or load-file-name buffer-file-name)))
-
 (defvar org-wiki/instances nil)
 
 ;; Convenience function
