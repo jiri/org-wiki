@@ -126,9 +126,3 @@
 	 (setq org-wiki/instances
 	       (delq (rassoc ref org-wiki/instances)
 		     org-wiki/instances)))))
-
-(org-wiki/start "~/Org/wiki")
-;; (org-wiki/stop  "~/Org/wiki")
-;; (org-wiki/stop  8000)
-
-;; (elnode-stop 8000)
