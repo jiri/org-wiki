@@ -16,6 +16,7 @@ are rendered just the way you configured them to.
 ** TODO Features to implement before v1.0
 
 - [X] Edit using `/path?edit` instead of `/edit/path`
+- [X] Support multiple Org-wiki instances
 - [ ] Generate highlighting CSS dynamically
 - [ ] Make relative links in Org files work
 - [ ] Improve routing
@@ -24,14 +25,15 @@ are rendered just the way you configured them to.
 - [ ] Render a directory tree for navigation
 - [ ] Easy creation of new pages in-browser
 - [ ] Complete CSS styles for Org HTML exports
-- [ ] Package Org-wiki and distribute it through MELPA
+- [ ] Package Org-wiki
+- [ ] Distribute Org-wiki through MELPA / Marmalade
 - [ ] Add a license file
 
-** TODO Make a the setup reusable for multiple directories
+** TODO Improve the API
 
-Right now, the setup is not reusable at all. Ideally, all you'd need
-to do to is use a macro / alist to define a wiki setup and run it with
-an independent handler.
+Right now, the setup is reusable, but the API could be
+better. Ideally, all you'd need to do to is use a macro / alist to
+define a wiki setup and run it with an independent handler.
 
 #+BEGIN_SRC emacs-lisp
 (make-wiki :root "~/Org/wiki"
