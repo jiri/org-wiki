@@ -17,7 +17,7 @@ are rendered just the way you configured them to.
 
 - [X] Edit using `/path?edit` instead of `/edit/path`
 - [X] Support multiple Org-wiki instances
-- [ ] Guard start / stop functions against multiple calls
+- [X] Guard start / stop functions against multiple calls
 - [ ] Generate highlighting CSS dynamically
 - [ ] Make relative links in Org files work
 - [ ] Improve routing

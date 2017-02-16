@@ -111,18 +111,23 @@
 ;;;###autoload
 (defun org-wiki/start (root &optional port)
   (let ((p (or port 8000)))
-    (push `(,p . ,root) org-wiki/instances)
-    (elnode-start 'org-wiki/root :port p)))
+    (unless (assoc port org-wiki/instances)
+      (push `(,p . ,root) org-wiki/instances)
+      (elnode-start 'org-wiki/root :port p))))
 
 ;;;###autoload
 (defun org-wiki/stop (ref)
-  (cond ((numberp ref)
+  (cond ((and (numberp ref) (assoc ref org-wiki/instances))
 	 (elnode-stop ref)
 	 (setq org-wiki/instances
 	       (delq (assoc ref org-wiki/instances)
 		     org-wiki/instances)))
-	((stringp ref)
+	((and (stringp ref) (rassoc ref org-wiki/instances))
 	 (elnode-stop (car (rassoc ref org-wiki/instances)))
 	 (setq org-wiki/instances
 	       (delq (rassoc ref org-wiki/instances)
 		     org-wiki/instances)))))
+
+;; (org-wiki/start "~/Org/wiki")
+;; (org-wiki/stop  "~/Org/wiki")
+;; org-wiki/instances
