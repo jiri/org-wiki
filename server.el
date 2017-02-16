@@ -86,20 +86,17 @@
 ;; Static file handlers
 ;; TODO: Automate this
 (defun org-wiki/style (httpcon)
-  (let* ((file (concat wiki-installation-directory "style.css")))
-    (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
-    (elnode-send-file httpcon file)))
+  (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
+  (elnode-send-file httpcon default-style-file))
 
 (defun org-wiki/mousetrap (httpcon)
-  (let* ((file (concat wiki-installation-directory "mousetrap.min.js")))
-    (elnode-http-start httpcon 200 '("Content-type" . "text/javascript"))
-    (elnode-send-file httpcon file)))
+  (elnode-http-start httpcon 200 '("Content-type" . "text/javascript"))
+  (elnode-send-file httpcon default-mousetrap-file))
 
 ;; TODO: Generate this on the fly
 (defun org-wiki/theme (httpcon)
-  (let* ((file (concat wiki-installation-directory "theme.css")))
-    (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
-    (elnode-send-file httpcon file)))
+  (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
+  (elnode-send-file httpcon default-theme-file))
 
 ;; Root handler
 (defconst org-wiki/routes `(("^.*//style.css" . org-wiki/style)
