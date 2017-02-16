@@ -69,12 +69,11 @@
 
 ;; TODO: Implement this manually
 (defun org-wiki/render (httpcon)
-  (let ((root (org-wiki/root-for httpcon)))
-    (elnode-docroot-for root
-      with path
-      on httpcon
-      do (let ((html (render-org-file (process-path path))))
-	   (elnode-send-html httpcon html)))))
+  (elnode-docroot-for (org-wiki/root-for httpcon)
+    with path
+    on httpcon
+    do (let ((html (org-wiki/render-file (org-wiki/process-path path))))
+	 (elnode-send-html httpcon html))))
 
 (defun org-wiki/edit (httpcon)
   (with-selected-frame (make-frame '((window-system . ns)
