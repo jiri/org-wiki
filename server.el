@@ -116,12 +116,13 @@
   (elnode-hostpath-dispatcher httpcon org-wiki/routes))
 
 ;; API functions
-;; TODO: Autoload this
+;;;###autoload
 (defun org-wiki/start (root &optional port)
   (let ((p (or port 8000)))
     (push `(,p . ,root) org-wiki/instances)
     (elnode-start 'org-wiki/root :port p)))
 
+;;;###autoload
 (defun org-wiki/stop (ref)
   (cond ((numberp ref)
 	 (elnode-stop ref)
