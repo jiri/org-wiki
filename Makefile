@@ -4,11 +4,13 @@ FILES = ./org-wiki.el        \
 	./theme.css        \
 	./org-wiki-pkg.el
 
+VERSION = 0.2
+
 package:
-	mkdir -p "org-wiki-0.1"
-	cp $(FILES) org-wiki-0.1/
-	tar -cvf org-wiki-0.1.tar org-wiki-0.1/*
+	mkdir -p "org-wiki-$(VERSION)"
+	cp $(FILES) "org-wiki-$(VERSION)/"
+	tar -cvf "org-wiki-$(VERSION).tar" "org-wiki-$(VERSION)"/*
 
 clean:
-	rm -rf org-wiki-0.1/
-	rm -f  org-wiki-0.1.tar
+	rm -rf "org-wiki-$(VERSION)/"
+	rm -f  "org-wiki-$(VERSION).tar"
