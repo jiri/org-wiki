@@ -31,9 +31,10 @@
 (defvar org-wiki/instances nil)
 
 ;; Convenience function
-;; TODO: Hide this
+;; TODO: Hide these
 (defun org-wiki/render-file (path)
-  (let ((org-html-head-extra head-extra))
+  (let ((org-html-head-extra head-extra)
+	(org-html-link-org-files-as-html nil))
     (with-current-buffer (find-file-noselect path)
       (progv
 	  (mapcar 'first wiki-extra-export-options)
