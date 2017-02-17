@@ -56,8 +56,9 @@ the root directory or the port the wiki is running on.
 - [X] Edit using `/path?edit` instead of `/edit/path`
 - [X] Support multiple Org-wiki instances
 - [X] Guard start / stop functions against multiple calls
+- [X] Make relative links in Org files work
+- [ ] Add docstrings to all functions and variables
 - [ ] Generate highlighting CSS dynamically
-- [ ] Make relative links in Org files work
 - [ ] Improve routing
 - [ ] Let users supply their own CSS files
 - [ ] Let users configure keyboard shortcuts
