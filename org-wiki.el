@@ -39,8 +39,12 @@
 	(org-export-as 'html)))))
 
 (defun org-wiki/generate-css ()
+  (with-temp-buffer
+    (compilation-mode))
+
   (window-configuration-to-register :org-wiki/html)
   (org-html-htmlize-generate-css)
+
   (goto-char (point-min))
   (if (re-search-forward "<!--" nil t)
       (delete-region (point-min) (+ (match-beginning 0) 4)))
