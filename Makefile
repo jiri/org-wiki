@@ -3,7 +3,7 @@ FILES = ./org-wiki.el        \
 	./style.css        \
 	./org-wiki-pkg.el
 
-VERSION = 0.4
+VERSION = 0.4.1
 
 package:
 	mkdir -p "org-wiki-$(VERSION)"
