@@ -57,18 +57,23 @@ the root directory or the port the wiki is running on.
 - [X] Support multiple Org-wiki instances
 - [X] Guard start / stop functions against multiple calls
 - [X] Make relative links in Org files work
+- [-] Better CSS support
+  - [X] Generate highlighting CSS dynamically
+  - [ ] Add an option to use static CSS
+  - [ ] Let users supply their own CSS files
 - [ ] Add docstrings to all functions and variables
-- [ ] Generate highlighting CSS dynamically
 - [ ] Improve routing
-- [ ] Let users supply their own CSS files
-- [ ] Let users configure keyboard shortcuts
 - [ ] Render a directory tree for navigation
-- [ ] Easy creation of new pages in-browser
 - [ ] Complete CSS styles for Org HTML exports
-- [ ] Package Org-wiki
-- [ ] Distribute Org-wiki through MELPA / Marmalade
-- [ ] Add a license file
+- [X] Package Org-wiki
 - [ ] Make ~start-wiki~ / ~stop-wiki~ interactive
+- [ ] Add a license file
+- [ ] Distribute Org-wiki through MELPA / Marmalade
+
+** TODO Features to implement in the future
+
+- [ ] Easy creation of new pages in-browse
+- [ ] Let users configure keyboard shortcuts
 
 ** TODO Improve the API
 
