@@ -40,6 +40,7 @@
 
 (defun org-wiki/generate-css ()
   (with-temp-buffer
+    (require 'helm)
     (compilation-mode))
 
   (window-configuration-to-register :org-wiki/html)
