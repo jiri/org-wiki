@@ -12,12 +12,12 @@
   (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />"
 	  "<script type=\"text/javascript\" src=\"/mousetrap.min.js\"></script>"
 	  "<script type=\"text/javascript\">
-                 Mousetrap.bind('ctrl+x ctrl+f', function() {
-                   var xmlHttp = new XMLHttpRequest();
-                   xmlHttp.open(\"GET\", window.location.href + \"?edit\", true);
-                   xmlHttp.send(null);
-                 });
-               </script>"
+             Mousetrap.bind('ctrl+x ctrl+f', function() {
+               var xmlHttp = new XMLHttpRequest();
+               xmlHttp.open(\"GET\", window.location.href + \"?edit\", true);
+               xmlHttp.send(null);
+             });
+           </script>"
 	  "<link rel=\"stylesheet\" type=\"text/css\" href=\"/theme.css\" />"))
 
 (defvar wiki-extra-export-options '((org-html-doctype "html5")
