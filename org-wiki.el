@@ -107,7 +107,12 @@
 
 (defun org-wiki/theme (httpcon)
   (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
-  (elnode-send-html httpcon (org-wiki/generate-css)))
+  (with-selected-frame (make-frame '((window-system . ns)
+				     (client . nowait)
+				     (visibility . nil)))
+    (let ((css (org-wiki/generate-css)))
+      (delete-frame)
+      (elnode-send-html httpcon css))))
 
 ;; Root handler
 (defconst org-wiki/routes `(("^.*//style.css" . org-wiki/style)
