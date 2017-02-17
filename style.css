@@ -32,8 +32,8 @@ pre.src::before {
     font-size: 10pt;
     border: 0;
     border-radius: 2px;
-    background-color: #333;
-    color: white;
+    /* background-color: #333; */
+    /* color: white; */
     padding: 12px !important;
 }
 

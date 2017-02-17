@@ -7,9 +7,6 @@
 (defconst default-style-file
   (expand-file-name "style.css" org-wiki-base))
 
-(defconst default-theme-file
-  (expand-file-name "theme.css" org-wiki-base))
-
 ;; TODO: Make this better
 (defconst head-extra
   (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />"
@@ -40,6 +37,13 @@
 	  (mapcar 'first wiki-extra-export-options)
 	  (mapcar 'second wiki-extra-export-options)
 	(org-export-as 'html)))))
+
+(defun org-wiki/generate-css ()
+  (window-configuration-to-register :org-wiki/html)
+  (org-html-htmlize-generate-css)
+  (let ((s (buffer-string)))
+    (jump-to-register :org-wiki/html)
+    (replace-regexp-in-string "\\(^\s+\\)body\\(\s+{\\)" "\\1.src\\2" s)))
 
 (defun org-wiki/process-path (path)
   (if (file-directory-p path)
@@ -91,10 +95,9 @@
   (elnode-http-start httpcon 200 '("Content-type" . "text/javascript"))
   (elnode-send-file httpcon default-mousetrap-file))
 
-;; TODO: Generate this on the fly
 (defun org-wiki/theme (httpcon)
   (elnode-http-start httpcon 200 '("Content-type" . "text/css"))
-  (elnode-send-file httpcon default-theme-file))
+  (elnode-send-html httpcon (org-wiki/generate-css)))
 
 ;; Root handler
 (defconst org-wiki/routes `(("^.*//style.css" . org-wiki/style)

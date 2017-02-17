@@ -1,7 +1,6 @@
 FILES = ./org-wiki.el        \
 	./mousetrap.min.js \
 	./style.css        \
-	./theme.css        \
 	./org-wiki-pkg.el
 
 VERSION = 0.3
