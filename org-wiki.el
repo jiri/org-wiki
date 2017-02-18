@@ -7,6 +7,9 @@
 (defconst default-style-file
   (expand-file-name "style.css" org-wiki-base))
 
+(defconst default-404-file
+  (expand-file-name "404.html" org-wiki-base))
+
 ;; TODO: Make this better
 (defconst head-extra
   (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\" />"
@@ -56,9 +59,11 @@
     (replace-regexp-in-string "\\(^\s*\\)body\\(\s*{\\)" "\\1.src\\2" s)))
 
 (defun org-wiki/process-path (path)
-  (if (file-directory-p path)
-      (concat (file-name-as-directory path) "index.org")
-    path))
+  (cond ((file-directory-p path)
+	 (concat (file-name-as-directory path) "index.org"))
+	((file-regular-p (concat path ".org"))
+	 (concat path ".org"))
+	((file-regular-p path) path)))
 
 (defun org-wiki/connection-port (httpcon)
   (let ((host (elnode-server-info httpcon)))
@@ -82,6 +87,17 @@
     on httpcon
     do (let ((html (org-wiki/render-file (org-wiki/process-path path))))
 	 (elnode-send-html httpcon html))))
+
+(defun org-wiki/render (httpcon)
+  (let* ((file (elnode-get-targetfile httpcon (org-wiki/root-for httpcon)))
+	(path (org-wiki/process-path file)))
+    (if path
+	(progn
+	  (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
+	  (elnode-send-html httpcon (org-wiki/render-file path)))
+      (progn
+	(elnode-http-start httpcon 200 '("Content-type" . "text/html"))
+	(elnode-send-file httpcon default-404-file)))))
 
 (defun org-wiki/edit (httpcon)
   (with-selected-frame (make-frame '((window-system . ns)
