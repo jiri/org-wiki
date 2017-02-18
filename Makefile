@@ -1,9 +1,10 @@
-FILES = ./org-wiki.el        \
+FILES = ./org-wiki.el      \
 	./mousetrap.min.js \
 	./style.css        \
+	./404.html         \
 	./org-wiki-pkg.el
 
-VERSION = 0.4.1
+VERSION = 0.4.2
 
 package:
 	mkdir -p "org-wiki-$(VERSION)"
