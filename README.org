@@ -5,6 +5,8 @@ point the package to the root of your directory and it will take care
 of the rest. It uses emacs as the rendering backend so the HTML files
 are rendered just the way you configured them to.
 
+[[./screenshot.png]]
+
 ** Features
 
 - Orgmode files are automatically rendered to html *using Emacs*
