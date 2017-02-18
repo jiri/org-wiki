@@ -69,10 +69,12 @@ the root directory or the port the wiki is running on.
 - [ ] Make ~start-wiki~ / ~stop-wiki~ interactive
 - [ ] Add a license file
 - [ ] Distribute Org-wiki through MELPA / Marmalade
+- [ ] Improve the 404 page
+  - [ ] Easy creation of new pages in-browse
+- [ ] Make a screenshot for README.org
 
 ** TODO Features to implement in the future
 
-- [ ] Easy creation of new pages in-browse
 - [ ] Let users configure keyboard shortcuts
 
 ** TODO Improve the API
