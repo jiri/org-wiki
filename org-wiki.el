@@ -80,14 +80,6 @@
       (org-wiki/edit httpcon)
     (org-wiki/render httpcon)))
 
-;; TODO: Implement this manually
-(defun org-wiki/render (httpcon)
-  (elnode-docroot-for (org-wiki/root-for httpcon)
-    with path
-    on httpcon
-    do (let ((html (org-wiki/render-file (org-wiki/process-path path))))
-	 (elnode-send-html httpcon html))))
-
 (defun org-wiki/render (httpcon)
   (let* ((file (elnode-get-targetfile httpcon (org-wiki/root-for httpcon)))
 	(path (org-wiki/process-path file)))
