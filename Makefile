@@ -4,7 +4,7 @@ FILES = ./org-wiki.el      \
 	./404.html         \
 	./org-wiki-pkg.el
 
-VERSION = 0.4.2
+VERSION = 0.5
 
 package:
 	mkdir -p "org-wiki-$(VERSION)"
