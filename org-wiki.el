@@ -107,7 +107,7 @@
     (x-focus-frame nil))
 
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
-  (elnode-http-return httpcon " "))
+  (elnode-http-return httpcon nil))
 
 ;; Static file handlers
 ;; TODO: Automate this
