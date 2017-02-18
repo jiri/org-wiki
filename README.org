@@ -62,7 +62,7 @@ the root directory or the port the wiki is running on.
   - [ ] Add an option to use static CSS
   - [ ] Let users supply their own CSS files
 - [ ] Add docstrings to all functions and variables
-- [ ] Improve routing
+- [X] Improve routing
 - [ ] Render a directory tree for navigation
 - [ ] Complete CSS styles for Org HTML exports
 - [X] Package Org-wiki
