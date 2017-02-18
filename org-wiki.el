@@ -103,9 +103,7 @@
   (with-selected-frame (make-frame '((window-system . ns)
 				     (client . nowait)))
     (let ((path (elnode-get-targetfile httpcon (org-wiki/root-for httpcon))))
-      (if (file-directory-p path)
-	  (find-file (concat (file-name-as-directory path) "index.org"))
-	(find-file path)))
+      (find-file (org-wiki/process-path path)))
     (x-focus-frame nil))
 
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
