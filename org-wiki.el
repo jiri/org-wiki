@@ -137,6 +137,9 @@
 ;; API functions
 ;;;###autoload
 (defun org-wiki/start (root &optional port)
+  (interactive
+   (list (read-directory-name "Root directory: ")
+	 (read-number "Port: " 8000)))
   (let ((p (or port 8000)))
     (unless (assoc port org-wiki/instances)
       (push `(,p . ,root) org-wiki/instances)
@@ -144,6 +147,8 @@
 
 ;;;###autoload
 (defun org-wiki/stop (ref)
+  (interactive
+   (list (read-number "Port: " 8000)))
   (cond ((and (numberp ref) (assoc ref org-wiki/instances))
 	 (elnode-stop ref)
 	 (setq org-wiki/instances

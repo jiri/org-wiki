@@ -66,7 +66,7 @@ the root directory or the port the wiki is running on.
 - [ ] Render a directory tree for navigation
 - [ ] Complete CSS styles for Org HTML exports
 - [X] Package Org-wiki
-- [ ] Make ~start-wiki~ / ~stop-wiki~ interactive
+- [X] Make ~start-wiki~ / ~stop-wiki~ interactive
 - [ ] Add a license file
 - [ ] Distribute Org-wiki through MELPA / Marmalade
 - [ ] Improve the 404 page
