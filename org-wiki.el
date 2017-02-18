@@ -91,13 +91,10 @@
 (defun org-wiki/render (httpcon)
   (let* ((file (elnode-get-targetfile httpcon (org-wiki/root-for httpcon)))
 	(path (org-wiki/process-path file)))
+    (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
     (if path
-	(progn
-	  (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
-	  (elnode-send-html httpcon (org-wiki/render-file path)))
-      (progn
-	(elnode-http-start httpcon 200 '("Content-type" . "text/html"))
-	(elnode-send-file httpcon default-404-file)))))
+	(elnode-send-html httpcon (org-wiki/render-file path))
+      (elnode-send-file httpcon default-404-file))))
 
 (defun org-wiki/edit (httpcon)
   (with-selected-frame (make-frame '((window-system . ns)
