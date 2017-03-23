@@ -21,7 +21,8 @@
                xmlHttp.send(null);
              });
            </script>"
-	  "<link rel=\"stylesheet\" type=\"text/css\" href=\"/theme.css\" />"))
+	  ;"<link rel=\"stylesheet\" type=\"text/css\" href=\"/theme.css\" />"
+	  ))
 
 (defvar wiki-extra-export-options '((org-html-doctype "html5")
 				    (org-html-head-include-default-style nil)
