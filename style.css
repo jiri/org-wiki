@@ -23,6 +23,12 @@ p, pre {
     /* text-align: justify; */
 }
 
+code {
+    background: #eeeeee;
+    padding: 0.2em;
+    border-radius: 2px;
+}
+
 pre.src::before {
     display: none !important;
 }
